@@ -2,6 +2,7 @@ package Tests;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
@@ -33,14 +34,43 @@ public class LoginTests {
         Assert.assertEquals(driver.getTitle(),"Web Orders");
     }
 
+    @Test
+    public void logOutTest(){
+        driver.get("http://secure.smartbearsoftware.com/samples/testcomplete12/WebOrders/login.aspx");
+        driver.findElement(By.id("ctl00_MainContent_username")).sendKeys("Tester");
+        driver.findElement(By.id("ctl00_MainContent_password")).sendKeys("test"+ Keys.ENTER);
+        driver.findElement(By.id("ctl00_logout")).click();
+        String title =driver.getTitle();
+        Assert.assertEquals(title,"Web Orders");
+        Assert.assertTrue(title.contains("error"));
+
+    }
+
+    @Test
+    public void negativeTest(){
+        driver.get("http://secure.smartbearsoftware.com/samples/testcomplete12/WebOrders/login.aspx");
+        driver.findElement(By.id("ctl00_MainContent_username")).sendKeys("test");
+        driver.findElement(By.id("ctl00_MainContent_password")).sendKeys("test"+Keys.ENTER);
+
+        String errormessage=driver.findElement(By.id("ctl00_MainContent_status")).getText();
+
+
+        Assert.assertEquals(errormessage,"Invalid Login or Password.");
+        Assert.assertTrue(errormessage.contains("Invalid Login or Password."));
+    }
+
+
+    @Test
+    public void negativepassword(){
+        driver.get("http://secure.smartbearsoftware.com/samples/testcomplete12/WebOrders/login.aspx");
+        driver.findElement(By.id("ctl00_MainContent_username")).sendKeys("Tester");
+        driver.findElement(By.id("ctl00_MainContent_password")).sendKeys("admin"+Keys.ENTER);
+
+        String errormessage=driver.findElement(By.id("ctl00_MainContent_status")).getText();
+        Assert.assertTrue(errormessage.contains("Invalid Login or Password."));
+    }
     @AfterMethod
     public void cleanUp(){
         driver.close();
     }
-
-    @Test
-    public void logOutTest(){
-        driver.findElement(By.id("ctl00_logout")).click();
-    }
 }
-
