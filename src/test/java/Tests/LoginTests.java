@@ -64,7 +64,7 @@ public class LoginTests {
     @Test
     public void negativepassword(){
         driver.get("http://secure.smartbearsoftware.com/samples/testcomplete12/WebOrders/login.aspx");
-        driver.findElement(By.id("ctl00_MainContent_username")).sendKeys("Tester");
+        driver.findElement(By.id("ctl00_MainContent_username")).sendKeys("Tester1");
         driver.findElement(By.id("ctl00_MainContent_password")).sendKeys("admin"+Keys.ENTER);
 
         String errormessage=driver.findElement(By.id("ctl00_MainContent_status")).getText();
