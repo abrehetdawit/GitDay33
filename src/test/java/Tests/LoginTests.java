@@ -18,7 +18,7 @@ public class LoginTests {
 
     WebDriver driver;
 
-
+// the before method
     @BeforeMethod
     public void setUp(){
         WebDriverManager.chromedriver().setup();
